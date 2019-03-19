@@ -1,0 +1,2 @@
+include sklady/templates/*.html
+include sklady/static/*/*

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+
+{% block title %}Přehled{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row buffer-top-md">
+	<div class='conatiner'>
+		<div class="alert alert-warning alert-dismissable" hidden="true">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+				<span class="pficon pficon-close"></span>
+			</button>
+			<span class="pficon pficon-warning-triangle-o"></span>
+			<strong>Na skladě není požadované množství zboží.</strong></div>
+	</div>
+    <div class="col-md-7">
+      <h2>Zásoby</h2>
+      <table id="inventory" class="display table table-bordered">
+        <thead>
+          <tr>
+            <th>Název</th>
+            <th>Množství na skladě</th>
+            <th>Cena za jednotku v CZK</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="inventoryBody">
+	{% for row in supplies %}
+        <tr>
+          <td>{{ row.name }}</td>
+          <td>{{ row.quantity }}</td>
+          <td>{{ row.price }}</td>
+          <td>
+            <form data-id="{{ row.id }}" data-name="{{ row.name }}" class="form-inline row-form">
+              <div class="form-group">
+		      <input id="{{ row.id }}" min='1' max='{{ row.quantity }}' data-max="{{ row.quantity }}" type="number" placeholder='1' class="form-control input-sm">
+              </div>
+              <button class="btn btn-success submit-btn btn-sm" type="submit">Přidat</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-4">
+      <div class="row">
+        <h2>Objednávka</h2>
+        <table class="display table table-bordered" id="basket">
+          <thead>
+            <tr>
+              <th>Název</th>
+              <th class="col-md-2">Množství v objednávce</th>
+              <th style="width: 0;"></th>
+            </tr>
+          </thead>
+          <tbody id="basketBody">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row buffer-top-md">
+	      <button class="btn btn-primary btn-lg" id="submitOrder" data-firstname="{{ first_name }}" data-lastname="{{ last_name }}">Odeslat objednávku</button>
+	      <button class="btn btn-danger btn-lg pull-right" id="clearBasket">Vyprázdnit objednávku</button>
+      </div> 
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
